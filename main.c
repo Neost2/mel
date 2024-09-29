@@ -16,20 +16,19 @@ void count_occurrences(const char* str, char ch);
 
 
 int main(int argc, char* argv[]) {
-    int userinput;
-    char str[MAX_INPUT_STRING_SIZE];
-    char input[10];
-
-    if (argc != 2) {
+        if (argc != 2) {
         printf("Usage: %s <string>\n", argv[0]);
         return 1;
     }
+     int userinput;
+    char str[MAX_INPUT_STRING_SIZE];
+    char input[10];
     strncpy(str, argv[1], MAX_INPUT_STRING_SIZE - 1);
     str[MAX_INPUT_STRING_SIZE - 1] = '\0';
 
     do {
 
-        printf("String Processing Tool\n");
+        printf("\nString Processing Tool\n");
         printf("1. Count characters\n");
         printf("2. Reverse string\n");
         printf("3. Convert to uppercase\n");
@@ -38,14 +37,16 @@ int main(int argc, char* argv[]) {
         printf("6. Exit\n");
         printf("Enter your input_selection: ");
 
-        if (fgets(input, sizeof(input), stdin) != NULL) {
+        fgets(input, sizeof(input), stdin); 
             userinput = atoi(input);
-        }
+    
 
 
         switch (userinput) {
         case 1:
-            printf("Number of characters: %zu\n", strlen(str));
+            count_characters(str);
+            printf("Press Enter to continue...");
+            getchar();
             break;
         case 2:
         {
@@ -54,6 +55,8 @@ int main(int argc, char* argv[]) {
             temp[MAX_INPUT_STRING_SIZE - 1] = '\0';
             reverse_string(temp);
             printf("Reversed string: %s\n", temp);
+            printf("Press Enter to continue...");
+            getchar();
             break;
         }
 
@@ -63,6 +66,8 @@ int main(int argc, char* argv[]) {
             temp[MAX_INPUT_STRING_SIZE - 1] = '\0';
             to_uppercase(temp);
             printf("Uppercase string: %s\n", temp);
+            printf("Press Enter to continue...");
+            getchar();
             break;
         }
 
@@ -74,12 +79,16 @@ int main(int argc, char* argv[]) {
                 printf("%s is not a palindrome\n", str);
             }
         }
-              break;
+               printf("Press Enter to continue...");
+            getchar();
+            break;
         case 5: {
             char ch;
             printf("Enter a character to count: ");
-            scanf(" %c", &ch);
+            scanf("%c", &ch);
             count_occurrences(str, ch);
+            while (getchar() != '\n');
+             printf("Press Enter to continue...");
             getchar();
             break;
         }
@@ -91,19 +100,19 @@ int main(int argc, char* argv[]) {
             printf("Invalid selection. Please choose a number between 1 and 6.\n");
             break;
         }
-        printf("Press Enter to continue...\n");
-        getchar();
+       
 
-    } while (1);
+    } while (userinput != 6);
     return 0;
 }
 
 void count_characters(const char* str) {
     int i = 0;
-    while (str[i] != '\0') {
+    while (*str != '\0') {
         i++;
+        str++;
     }
-    printf("Number of characters: %s\n", str);
+    printf("Number of characters: %d\n", i);
 }
 
 // Function to reverse a string
@@ -122,7 +131,7 @@ void reverse_string(char* str) {
 // Function to convert a string to uppercase
 void to_uppercase(char* str) {
     char* ptr = str;
-    while (*ptr) {
+    while (*ptr != '\0') {
         *ptr = toupper(*ptr);
         ptr++;
     }
